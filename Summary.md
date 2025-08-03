@@ -1,0 +1,2 @@
+- The initial error after building was the API docker file ('docker') could not find the module 'flask', which needed to be edited to include the installation step.
+- After checking the containers were running, the next issue was to find why the front end was not loading the message from app.py, this was due to the port exposure only being internal on the app.py, after editing this to be public (allowing our local machine to access it outside the container) the fronnt end loaded without errors 
