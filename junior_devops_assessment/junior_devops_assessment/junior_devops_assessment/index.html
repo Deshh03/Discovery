@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend App</title>
+</head>
+<body>
+    <h1>My Frontend App</h1>
+    <p>This page will try to fetch data from the backend.</p>
+    <div id="message">Loading...</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://backend:5000/data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('message').innerText = `Backend says: ${data.message}`;
+                })
+                .catch(error => {
+                    document.getElementById('message').innerText = 'Could not connect to the backend.';
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+</html>
