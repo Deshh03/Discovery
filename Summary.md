@@ -1,15 +1,13 @@
 Main issues:
 The API docker file was missing the installation step for the required packages
-The application was only listening for connections inside the container and was blocking the local machine (my laptop)
+The application was only listening for connections inside the container and was blocking external connections for my machine via localhost
 ----------------------------------
 Fixing:
 The initial error after building was the API docker file ('docker') could not find the module 'flask', which needed to be edited to include the installation step.
--I first checked if the containers were running
--With the initial error produced from the API, I did some research on what could be the cause
--After concluding the requirements file had the right reference, it could only be the docker file as the cause
+-I first checked if the containers were running, the front end was, the backend was failing with the following error "ModuleNotFoundError: No module named 'flask'". This indicated to me that flask was no installed in the container, I checked if it was defined in the requirements file and it was. This means the requirements were not being installed in the container. After checking the Dockerfile, copying of the requirements was being done but not installing the dependencies within it. Once installing the requirements, both containers started up. 
 -Dockerfile edited and saved
 -containers status were 'running'
-After checking the containers were running, the next issue was to find the cause of the front end message not loading, this was due to the port exposure only being internal on the app.py, after editing this to be public (allowing our local machine to access it outside the container) the front end loaded without errors 
+After checking the containers were running, the next issue was to find the cause of the front end message not loading, this was due to the port exposure only being internal on the app.py, after allowing connections from localhost the front end loaded without errors 
 -Load the defined port assigned (localhost://5000/data)
 -Use the 'empty response error' to research common causes and compare to the project
 -The port exposure defined in the app.py file was the issue, with requiring an edit to expose the port to external access
